@@ -38,13 +38,16 @@ var allQuestions = [
         ]
     },
     {
-        Q: "Select a use of media queries in CSS?",
+        Q: "Select a use of media queries in CSS",
         A:[
             {answer: "Set color", is:false},
             {answer: "None", is:false},
             {answer: "Set font-size", is:false},
             {answer: "Viewport", is:true},
         ]
+    },
+    {
+
     },
 ];
 
@@ -54,7 +57,6 @@ function selectQuestion(){
     ContainerB.innerHTML = "B. " + allQuestions[numberQuestion].A[1].answer;
     ContainerC.innerHTML = "C. " + allQuestions[numberQuestion].A[2].answer;
     ContainerD.innerHTML = "D. " + allQuestions[numberQuestion].A[3].answer;
-    numberQuestion++;
     console.log(numberQuestion);
 }
 
@@ -68,13 +70,13 @@ nextbtn.addEventListener("click", function(){
 function validateQA(answer){
     let iscorrect;
     if (answer==="A"){
-        iscorrect = allQuestions[numberQuestion-1].A[0].is;
+        iscorrect = allQuestions[numberQuestion].A[0].is;
     }else if(answer==="B"){
-        iscorrect = allQuestions[numberQuestion-1].A[1].is;
+        iscorrect = allQuestions[numberQuestion].A[1].is;
     }else if(answer==="C"){
-        iscorrect = allQuestions[numberQuestion-1].A[2].is;
+        iscorrect = allQuestions[numberQuestion].A[2].is;
     }else if (answer==="D"){
-        iscorrect = allQuestions[numberQuestion-1].A[3].is;
+        iscorrect = allQuestions[numberQuestion].A[3].is;
     }
 
     if(iscorrect){
@@ -89,10 +91,17 @@ function validateQA(answer){
 function asignQA(event){
     let answer = event.target.id;
     validateQA(answer);
-    selectQuestion();
+    if(allQuestions[numberQuestion+1] === "" || timeLeft === 0){
+        startquiz.classList.toggle('hide');
+        questionquiz.classList.toggle('hide');
+        highscores.classList,toggle('shown');
+    }else{
+        selectQuestion();
+        numberQuestion++;
+    }
 }
 
-main_container.addEventListener("click", asignQA);
+main_container.addEventListener("click",asignQA);
 
 function countdown() {
     var timeInterval = setInterval(function(){
