@@ -58,6 +58,7 @@ function selectQuestion(){
     ContainerC.innerHTML = "C. " + allQuestions[numberQuestion].A[2].answer;
     ContainerD.innerHTML = "D. " + allQuestions[numberQuestion].A[3].answer;
     console.log(numberQuestion);
+    numberQuestion++;
 }
 
 nextbtn.addEventListener("click", function(){
@@ -97,7 +98,6 @@ function asignQA(event){
         highscores.classList,toggle('shown');
     }else{
         selectQuestion();
-        numberQuestion++;
     }
 }
 
