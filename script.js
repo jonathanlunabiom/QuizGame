@@ -1,4 +1,3 @@
-// var highscore-list
 var h1content = document.querySelector("#h1content");
 var pcontent = document.querySelector(".pcontent");
 var nextbtn = document.querySelector(".next")
@@ -11,13 +10,13 @@ var ContainerA = document.querySelector("#A");
 var ContainerB = document.querySelector("#B");
 var ContainerC = document.querySelector("#C");
 var ContainerD = document.querySelector("#D");
+var main_container = document.querySelector(".main-container");
+var displayGoB = document.querySelector(".iscorrect");
 questionquiz.classList.toggle('hide');
 highscores.classList.toggle('hide');
 h1content.innerHTML = ("Quiz Challenge");
 var numberQuestion = 0;
-var corrects = 0;
-var wrongs = 0;
-var flag = false;
+var timeLeft = 100;
 
 var allQuestions = [
     {
@@ -56,7 +55,7 @@ function selectQuestion(){
     ContainerC.innerHTML = "C. " + allQuestions[numberQuestion].A[2].answer;
     ContainerD.innerHTML = "D. " + allQuestions[numberQuestion].A[3].answer;
     numberQuestion++;
-    console.log(numberQuestion)
+    console.log(numberQuestion);
 }
 
 nextbtn.addEventListener("click", function(){
@@ -66,111 +65,42 @@ nextbtn.addEventListener("click", function(){
     countdown();
 })
 
-ContainerA.addEventListener("click",function(){
-    selectQuestion();
-    if(allQuestions[numberQuestion-1].A[0].is){
-        corrects++;
-    }else{
-        wrongs++;
-        // timer-10
+function validateQA(answer){
+    let iscorrect;
+    if (answer==="A"){
+        iscorrect = allQuestions[numberQuestion-1].A[0].is;
+    }else if(answer==="B"){
+        iscorrect = allQuestions[numberQuestion-1].A[1].is;
+    }else if(answer==="C"){
+        iscorrect = allQuestions[numberQuestion-1].A[2].is;
+    }else if (answer==="D"){
+        iscorrect = allQuestions[numberQuestion-1].A[3].is;
     }
-})
 
-ContainerB.addEventListener("click",function(){
-    selectQuestion();
-    if(allQuestions[numberQuestion-1].A[1].is){
-        corrects++;
+    if(iscorrect){
+        displayGoB.innerHTML = ("Nice!");
     }else{
-        wrongs++;
-        // timer-10
+        displayGoB.innerHTML = ("Bad one! :(");
+        timeLeft=timeLeft-10;
     }
-})
+    return iscorrect;
+}
 
-ContainerC.addEventListener("click",function(){
+function asignQA(event){
+    let answer = event.target.id;
+    validateQA(answer);
     selectQuestion();
-    console.log(allQuestions[numberQuestion-1].A[2].is)
-    if(allQuestions[numberQuestion1].A[2].is){
-        corrects++;
-    }else{
-        wrongs++;
-    }
-})
+}
 
-ContainerD.addEventListener("click",function(){
-    selectQuestion();
-    if(allQuestions[numberQuestion-1].A[3].is){
-        corrects++;
-    }else{
-        wrongs++;
-    }
-})
+main_container.addEventListener("click", asignQA);
 
 function countdown() {
-      var timeLeft = 100;
-      // TODO: Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-      var timeInterval = setInterval(function(){
-        timeLeft--;
-        timer.innerHTML = timeLeft + " seconds remaining";
-    
-        if(timeLeft===0){
-          clearInterval(timeInterval);
-        }
+    var timeInterval = setInterval(function(){
+      timeLeft--;
+      timer.innerHTML = timeLeft + " seconds remaining";
   
-  
-      },1000);
-      
+      if(timeLeft===0){
+        clearInterval(timeInterval);
+      }
+    },1000);
 }
-
-if(flag){
-    questionquiz.classList.toggle('hide');
-    startquiz.classList.toggle('hide');
-    highscores.classList.toggle('shown');
-}
-
-
-// for (var i=0;i<allQuestions[0].A.length;i++){
-//     allcontainers[i].addEventListener("click", function(){
-//         selectQuestion();
-//         console.log("click:" + i)
-//     })
-// }
-
-// function concatAnswer(){
-
-// }
-
-
-
-
-// allcontainers[j].addEventListener("click", function(){
-//     i++;
-// })
-
-// var score=0;
-
-// function startQuiz(){
-//     score=0;
-
-// }
-// console.log(allQuestions[1].Q);
-// console.log(allQuestions[2].A[1].is)
-// console.log(allQuestions[2].A[3].answer)
-// console.log(allQuestions.length);
-// console.log(allQuestions[0].A.length);
-
-
-// for(var i=0; i<allQuestions.length;i++){
-//     for(var j=0;j<allQuestions[i].A.length;j++){
-
-//         if(allQuestions[i].A[j].is){
-//             console.log("verdadero")
-//         }else{
-//             console.log("falso")
-//         }
-//         console.log(allQuestions[i].A[j].is)
-//     }
-// }
-
-//when clicking next the section hides
-
-//questions
