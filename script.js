@@ -6,12 +6,16 @@ var questionquiz = document.querySelector(".question-quiz");
 var highscores = document.querySelector(".highscores");
 var allcontainers = document.querySelectorAll(".container");
 var timer = document.querySelector("#time");
+var submitbutton = document.getElementById("buttonsubmit");
+var user = document.getElementById("name");
 var ContainerA = document.querySelector("#A");
 var ContainerB = document.querySelector("#B");
 var ContainerC = document.querySelector("#C");
 var ContainerD = document.querySelector("#D");
 var main_container = document.querySelector(".main-container");
 var displayGoB = document.querySelector(".iscorrect");
+var finalscore = document.querySelector(".score");
+var flag = false;
 questionquiz.classList.toggle('hide');
 highscores.classList.toggle('hide');
 h1content.innerHTML = ("Quiz Challenge");
@@ -46,9 +50,6 @@ var allQuestions = [
             {answer: "Viewport", is:true},
         ]
     },
-    {
-
-    },
 ];
 
 function selectQuestion(){
@@ -57,8 +58,6 @@ function selectQuestion(){
     ContainerB.innerHTML = "B. " + allQuestions[numberQuestion].A[1].answer;
     ContainerC.innerHTML = "C. " + allQuestions[numberQuestion].A[2].answer;
     ContainerD.innerHTML = "D. " + allQuestions[numberQuestion].A[3].answer;
-    console.log(numberQuestion);
-    numberQuestion++;
 }
 
 nextbtn.addEventListener("click", function(){
@@ -86,19 +85,25 @@ function validateQA(answer){
         displayGoB.innerHTML = ("Bad one! :(");
         timeLeft=timeLeft-10;
     }
+    numberQuestion++;
+    if (numberQuestion == 3){
+        flag = true;
+        questionquiz.classList.toggle('shown');
+        highscores.classList.toggle('hide');
+        h1content.classList.toggle('hide')
+        h1content.innerHTML = ("Set your highscore!");
+        finalscore.innerHTML = ("Score: " + timeLeft);
+        submitbutton.addEventListener("submit", (event) => {
+            console.log(user)
+        });
+    }
     return iscorrect;
 }
 
 function asignQA(event){
     let answer = event.target.id;
     validateQA(answer);
-    if(allQuestions[numberQuestion+1] === "" || timeLeft === 0){
-        startquiz.classList.toggle('hide');
-        questionquiz.classList.toggle('hide');
-        highscores.classList,toggle('shown');
-    }else{
-        selectQuestion();
-    }
+    selectQuestion();
 }
 
 main_container.addEventListener("click",asignQA);
@@ -108,8 +113,9 @@ function countdown() {
       timeLeft--;
       timer.innerHTML = timeLeft + " seconds remaining";
   
-      if(timeLeft===0){
+      if(timeLeft===0 || flag){
         clearInterval(timeInterval);
+        timer.innerHTML = ("");
       }
     },1000);
 }
