@@ -94,7 +94,7 @@ function validateQA(answer){
         h1content.innerHTML = ("Set your highscore!");
         finalscore.innerHTML = ("Score: " + timeLeft);
         submitbutton.addEventListener("submit", (event) => {
-            console.log(user)
+            
         });
     }
     return iscorrect;
